@@ -22,7 +22,8 @@ function findScript(arr, arrLen1, arrLen2) {
         console.log(arr[x].attribs.src);
     }
 
-    return new Promise((resolve, reject) => {
+
+    var analytics_check = new Promise((resolve, reject) => {
         for(var i = 0; i < arrLen1; i++){
             for(var j = 0; j < arrLen2; ){
                 if(script_arr[i].indexOf(gaScripts[j]) !== -1) {
@@ -33,6 +34,8 @@ function findScript(arr, arrLen1, arrLen2) {
         console.log(analytics);
         resolve(analytics);
     });
+
+    return analytics_check;
 }
 
 // @route GET /:url
@@ -51,7 +54,7 @@ app.get("/:url", (req, res) => {
     });
 });
 
-var url = "https://montyanderson.net/"
+var url = "https://jessedavda.github.io/"
 
 request.get(url, (error, response, html) => {
     if(error) console.log('There was an error processing your request: ', error);
@@ -72,8 +75,12 @@ request.get(url, (error, response, html) => {
     var analytics_length = gaScripts.length;
 
     findScript(scripts, script_length, analytics_length)
-        .then(res => {
-            console.log("response: ", res);
+        .then(analytics => {
+            console.log("response: ", analytics);
+            console.log("wqooqdqfqefe");
+        })
+        .catch(e => {
+            console.log(e);
         });
 
     // var titles = $("h1");
