@@ -1,11 +1,20 @@
 <html>
     <head>
         <title>SiteScrape</title>
-        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     </head>
     <body>
-        <input type="text"></input>
-        <button>Scrape</button>
+        <div class="nav">
+            <h1>SITE SCRAPE</h1>
+            <i id="github" class="fab fa-github"></i>
+        </div>
+        <div class="inputs">
+            <i class="fas fa-search" id="search"></i>
+            <input type="text" placeholder="Enter the URL here" class="url"></input>
+            <button>Scrape</button>
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
         <script src="js/script.js"></script>
     </body>

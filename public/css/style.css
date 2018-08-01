@@ -1,0 +1,128 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* margin-top: 70px; */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: center; */
+
+    background-color: #45b29d;
+}
+
+.nav {
+    box-sizing: border-box;
+
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 70px;
+
+    background-color: #444F5A;
+    padding-left: 10%;
+
+    display: flex;
+    align-items: center;
+    /* box-shadow: 0px 2px 2px #888; */
+}
+
+.nav h1 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #fff;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #fff;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #fff;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #fff;
+}
+
+#github {
+    position: absolute;
+    right: 10%;
+
+    font-size: 2em;
+    color: #fff;
+}
+
+#github:hover {
+    cursor: pointer;
+}
+
+.inputs {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 25%;
+    height: 550px;
+    border-radius: 15px;
+
+    background-color: #fff;
+    margin-left: 5%;
+    box-shadow: 0 0 20px #888;
+}
+
+#search {
+    font-size: 13rem;
+    color: #495057;
+}
+
+.url {
+    box-sizing: border-box;
+    padding-left: 2%;
+    margin: 30px 1%;
+    margin-top: 80px;
+    width: 90%;
+    height: 50px;
+
+    border-radius: 5px;
+    border: none;
+    background-color:rgba(68, 79, 90, 0.8);
+    /* box-shadow: 0 0 10px #888; */
+    outline: none;
+
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #fff;
+    font-size: 1.3rem;
+}
+
+.url:hover {
+    outline: none;
+}
+
+button {
+    width: 30%;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    /* box-shadow: 0 0 10px #888; */
+    background-color: rgba(68, 79, 90, 0.5);
+
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0 1%;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+}

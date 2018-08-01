@@ -11,31 +11,31 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + "/public"));
 
-var gaScripts = ["ga.js", "dc.js", "analytics.js", "gtag.js", "ga_exp.js", "gtm.js"];
+var gaScripts = ["ga.js", "dc.js", "analytics.js", "gtag.js", "gatag.js", "ga_exp.js", "gtm.js"];
 
 function findScript(arr, arrLen1, arrLen2) {
     var analytics = false;
     var script_arr = [];
 
     for(var x = 0; x < arrLen1; x++) {
-        script_arr.push(arr[x].attribs.src);
-        console.log(arr[x].attribs.src);
+        if(arr[x].attribs.src != undefined) {
+            script_arr.push(arr[x].attribs.src);
+            //console.log(arr[x].attribs.src);
+        }
     }
 
-
-    var analytics_check = new Promise((resolve, reject) => {
-        for(var i = 0; i < arrLen1; i++){
-            for(var j = 0; j < arrLen2; ){
-                if(script_arr[i].indexOf(gaScripts[j]) !== -1) {
-                    analytics = true;
-                }
+    for(var i = 0; i < arrLen1; i++){
+        for(var j = 0; j < arrLen2; j++){
+            //console.log("false");
+            if(script_arr[i].indexOf(gaScripts[j]) !== -1) {
+                analytics = true;
+            //    console.log("weew true");
             }
         }
-        console.log(analytics);
-        resolve(analytics);
-    });
+    }
+    //console.log(analytics);
 
-    return analytics_check;
+    return analytics;
 }
 
 // @route GET /:url
@@ -54,7 +54,7 @@ app.get("/:url", (req, res) => {
     });
 });
 
-var url = "https://jessedavda.github.io/"
+var url = "https://www.ca.gov/"
 
 request.get(url, (error, response, html) => {
     if(error) console.log('There was an error processing your request: ', error);
@@ -74,21 +74,15 @@ request.get(url, (error, response, html) => {
     var script_length = scripts.length;
     var analytics_length = gaScripts.length;
 
-    findScript(scripts, script_length, analytics_length)
-        .then(analytics => {
-            console.log("response: ", analytics);
-            console.log("wqooqdqfqefe");
-        })
-        .catch(e => {
-            console.log(e);
-        });
+    console.log("analytics: ", findScript(scripts, script_length, analytics_length));
+    console.log(1);
 
     // var titles = $("h1");
     // console.log(titles.text());
     //
-    $(scripts).each((i, script) => {
-        console.log($(script).text() + " : " + $(script).attr('src'));
-    });
+    // $(scripts).each((i, script) => {
+    //     console.log($(script).text() + " : " + $(script).attr('src'));
+    // });
     //
     // $(links).each((i, link) => {
     //     console.log($(link).text() + ":\n" + $(link).attr('href'));
