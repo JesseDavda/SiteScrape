@@ -20,20 +20,19 @@ function findScript(arr, arrLen1, arrLen2) {
     for(var x = 0; x < arrLen1; x++) {
         if(arr[x].attribs.src != undefined) {
             script_arr.push(arr[x].attribs.src);
-            //console.log(arr[x].attribs.src);
+            console.log(arr[x].attribs.src);
         }
     }
 
-    for(var i = 0; i < arrLen1; i++){
+    var scriptArrLen = script_arr.length;
+
+    for(var i = 0; i < scriptArrLen - 1; i++){
         for(var j = 0; j < arrLen2; j++){
-            //console.log("false");
             if(script_arr[i].indexOf(gaScripts[j]) !== -1) {
                 analytics = true;
-            //    console.log("weew true");
             }
         }
     }
-    //console.log(analytics);
 
     return analytics;
 }
@@ -54,7 +53,7 @@ app.get("/:url", (req, res) => {
     });
 });
 
-var url = "https://www.ca.gov/"
+var url = "https://samanimkr.github.io/"
 
 request.get(url, (error, response, html) => {
     if(error) console.log('There was an error processing your request: ', error);
@@ -75,7 +74,6 @@ request.get(url, (error, response, html) => {
     var analytics_length = gaScripts.length;
 
     console.log("analytics: ", findScript(scripts, script_length, analytics_length));
-    console.log(1);
 
     // var titles = $("h1");
     // console.log(titles.text());
