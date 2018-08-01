@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require('express');
 const request = require('request');
 const cheerio = require('cheerio');
@@ -9,7 +11,29 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + "/public"));
 
-var gAnalyiticsScripts = ["ga.js", "dc.js", "analytics.js", "gtag.js", "ga_exp.js", "gtm.js"];
+var gaScripts = ["ga.js", "dc.js", "analytics.js", "gtag.js", "ga_exp.js", "gtm.js"];
+
+function findScript(arr, arrLen1, arrLen2) {
+    var analytics = false;
+    var script_arr = [];
+
+    for(var x = 0; x < arrLen1; x++) {
+        script_arr.push(arr[x].attribs.src);
+        console.log(arr[x].attribs.src);
+    }
+
+    return new Promise((resolve, reject) => {
+        for(var i = 0; i < arrLen1; i++){
+            for(var j = 0; j < arrLen2; ){
+                if(script_arr[i].indexOf(gaScripts[j]) !== -1) {
+                    analytics = true;
+                }
+            }
+        }
+        console.log(analytics);
+        resolve(analytics);
+    });
+}
 
 // @route GET /:url
 // @desc sends the URL of the site you want to Scrape
@@ -27,11 +51,10 @@ app.get("/:url", (req, res) => {
     });
 });
 
-var url = "https://ca.gov/"
+var url = "https://montyanderson.net/"
 
 request.get(url, (error, response, html) => {
     if(error) console.log('There was an error processing your request: ', error);
-    var analytics = false;
 
     var $ = cheerio.load(html);
 
@@ -45,19 +68,21 @@ request.get(url, (error, response, html) => {
     console.log("Number of unique links: ", unique_links.length);
 
     var scripts = $('script');
+    var script_length = scripts.length;
+    var analytics_length = gaScripts.length;
 
-    scripts.each((i) => {
-        gAnalyiticsScripts.each((j) => {
-            if(scipts[i].includes(gAnalyiticsScripts[j])) {
-                analytics = true;
-            }
+    findScript(scripts, script_length, analytics_length)
+        .then(res => {
+            console.log("response: ", res);
         });
-    });
 
+    // var titles = $("h1");
+    // console.log(titles.text());
+    //
     $(scripts).each((i, script) => {
         console.log($(script).text() + " : " + $(script).attr('src'));
     });
-
+    //
     // $(links).each((i, link) => {
     //     console.log($(link).text() + ":\n" + $(link).attr('href'));
     // });
