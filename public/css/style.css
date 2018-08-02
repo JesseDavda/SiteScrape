@@ -9,7 +9,7 @@ body {
     align-items: center;
     /* justify-content: center; */
 
-    background-color: #45b29d;
+    background-color: rgba(72, 126, 176, 0.3);
 }
 
 .nav {
@@ -65,14 +65,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 5px solid #dcdde1;
 
     width: 25%;
-    height: 550px;
     border-radius: 15px;
 
     background-color: #fff;
     margin-left: 5%;
-    box-shadow: 0 0 20px #888;
+    box-shadow: inset 0 0 10px #888, 0 0 20px #888;
 }
 
 #search {
@@ -83,8 +83,9 @@ body {
 .url {
     box-sizing: border-box;
     padding-left: 2%;
-    margin: 30px 1%;
-    margin-top: 80px;
+    margin: 0 1%;
+    margin-top: 50px;
+    margin-bottom: 30px;
     width: 90%;
     height: 50px;
 
@@ -107,7 +108,7 @@ body {
 button {
     width: 30%;
     height: 50px;
-    border-radius: 5px;
+    border-radius: 50px;
     border: none;
     /* box-shadow: 0 0 10px #888; */
     background-color: rgba(68, 79, 90, 0.5);
@@ -117,6 +118,7 @@ button {
     color: #fff;
     font-size: 1.2em;
     margin: 0 1%;
+    margin-bottom: 40px;
 }
 
 button:focus {
@@ -125,4 +127,21 @@ button:focus {
 
 button:hover {
     cursor: pointer;
+}
+
+.output {
+    width: 40%;
+    height: 500px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+
+    background-color: #fff;
+    margin-left: 5%;
+    box-shadow: inset 0 0 10px #888, 0 0 20px #888;
+    border: 5px solid #dcdde1;
+}
+
+h1, p, h3, h4 {
+    font-family: 'Lato', sans-serif;
 }

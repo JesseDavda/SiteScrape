@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 
 var gaScripts = ["ga.js", "dc.js", "analytics.js", "gtag.js", "gatag.js", "ga_exp.js", "gtm.js"];
+var returnObj;
 
 function findScript(arr, arrLen1, arrLen2) {
     var analytics = false;
@@ -20,7 +21,6 @@ function findScript(arr, arrLen1, arrLen2) {
     for(var x = 0; x < arrLen1; x++) {
         if(arr[x].attribs.src != undefined) {
             script_arr.push(arr[x].attribs.src);
-            console.log(arr[x].attribs.src);
         }
     }
 
@@ -37,54 +37,50 @@ function findScript(arr, arrLen1, arrLen2) {
     return analytics;
 }
 
-// @route GET /:url
+// @route POST /:url
 // @desc sends the URL of the site you want to Scrape
 // @access public
-app.get("/:url", (req, res) => {
-    var url = req.params.url;
+app.post("/url", (req, res) => {
+    var url = req.body.url;
+
+    console.log(url);
 
     request.get(url, (error, response, html) => {
-        if(error) console.log('There was an error processing your request: ', error);
 
         var $ = cheerio.load(html);
 
         var title = $('title').text();
-        console.log(title);
+
+        var links = $('a');
+
+        var unique_links = _.uniq(links);
+
+        var scripts = $('script');
+        var script_length = scripts.length;
+        var analytics_length = gaScripts.length;
+
+        var analytics = findScript(scripts, script_length, analytics_length);
+
+        var connectionSecure, connectionEncrypted, socketSecure, socketEncrypted;
+        connectionSecure = response.connection._secureEstablished;
+        connectionEncrypted = response.connection.encrypted;
+        socketSecure = response.socket._secureEstablished;
+        socketEncrypted = response.socket.encrypted;
+
+        returnObj = {
+            title: title,
+            links: links.length,
+            unique_links: unique_links.length,
+            hasAnalyitics: analytics,
+            connectionSecure: connectionSecure,
+            connectionEncrypted: connectionEncrypted,
+            socketSecure: socketSecure,
+            socketEncrypted: socketEncrypted
+        }
+
+        console.log(returnObj);
+        return res.status(200).json(returnObj);
     });
-});
-
-var url = "https://samanimkr.github.io/"
-
-request.get(url, (error, response, html) => {
-    if(error) console.log('There was an error processing your request: ', error);
-
-    var $ = cheerio.load(html);
-
-    var title = $('title').text();
-    console.log('Title: ', title);
-
-    var links = $('a');
-    console.log("Number of links: " + links.length);
-
-    var unique_links = _.uniq(links);
-    console.log("Number of unique links: ", unique_links.length);
-
-    var scripts = $('script');
-    var script_length = scripts.length;
-    var analytics_length = gaScripts.length;
-
-    console.log("analytics: ", findScript(scripts, script_length, analytics_length));
-
-    // var titles = $("h1");
-    // console.log(titles.text());
-    //
-    // $(scripts).each((i, script) => {
-    //     console.log($(script).text() + " : " + $(script).attr('src'));
-    // });
-    //
-    // $(links).each((i, link) => {
-    //     console.log($(link).text() + ":\n" + $(link).attr('href'));
-    // });
 });
 
 const port = process.env.PORT || 8080;

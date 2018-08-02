@@ -11,9 +11,20 @@
             <i id="github" class="fab fa-github"></i>
         </div>
         <div class="inputs">
-            <i class="fas fa-search" id="search"></i>
-            <input type="text" placeholder="Enter the URL here" class="url"></input>
-            <button>Scrape</button>
+            <input type="text" placeholder="Enter the URL here" class="url" id="url_entry"></input>
+            <button id="request">Scrape</button>
+        </div>
+        <div class="output">
+            <h1>A breakdown for: </h1>
+            <h4>Title: </h4>
+            <p>Number of links on the site: </p>
+            <p>Number of unique links on the site: </p>
+            <p>The page has google analytics: </p>
+            <h4>Is the page secure: </h4>
+            <p>Is the connection secure?: </p>
+            <p>Is the connection encrypted?: </p>
+            <p>Is the socket secure?: </p>
+            <p>Is the socket encrypted?: </p>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
         <script src="js/script.js"></script>
