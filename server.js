@@ -11,13 +11,16 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + "/public"));
 
+//Array of script names used by google analytics
 var gaScripts = ["ga.js", "dc.js", "analytics.js", "gtag.js", "gatag.js", "ga_exp.js", "gtm.js"];
 var returnObj;
 
+//function that finds whether the page has google analytics enabled
 function findScript(arr, arrLen1, arrLen2) {
     var analytics = false;
     var script_arr = [];
 
+    //creating an array of script names from a JSON object array
     for(var x = 0; x < arrLen1; x++) {
         if(arr[x].attribs.src != undefined) {
             script_arr.push(arr[x].attribs.src);
@@ -26,6 +29,7 @@ function findScript(arr, arrLen1, arrLen2) {
 
     var scriptArrLen = script_arr.length;
 
+    //Looping through all of the script names and checking them against the known google analytics script names
     for(var i = 0; i < scriptArrLen - 1; i++){
         for(var j = 0; j < arrLen2; j++){
             if(script_arr[i].indexOf(gaScripts[j]) !== -1) {
@@ -43,24 +47,26 @@ function findScript(arr, arrLen1, arrLen2) {
 app.post("/url", (req, res) => {
     var url = req.body.url;
 
-    console.log(url);
-
+    //requesting the webpage
     request.get(url, (error, response, html) => {
-
+        //loading the html data returned into a cheerio object to scrape it
         var $ = cheerio.load(html);
 
         var title = $('title').text();
 
         var links = $('a');
 
+        //using the underscore libary to make sure the array of links doesnt have any duplicates
         var unique_links = _.uniq(links);
 
         var scripts = $('script');
         var script_length = scripts.length;
         var analytics_length = gaScripts.length;
 
+        //calling the function to find whether the page has google analytics
         var analytics = findScript(scripts, script_length, analytics_length);
 
+        //checking that the socket and the connection are secure and both are encrypted
         var connectionSecure, connectionEncrypted, socketSecure, socketEncrypted;
         connectionSecure = response.connection._secureEstablished;
         connectionEncrypted = response.connection.encrypted;
@@ -71,7 +77,7 @@ app.post("/url", (req, res) => {
             title: title,
             links: links.length,
             unique_links: unique_links.length,
-            hasAnalyitics: analytics,
+            hasAnalytics: analytics,
             connectionSecure: connectionSecure,
             connectionEncrypted: connectionEncrypted,
             socketSecure: socketSecure,

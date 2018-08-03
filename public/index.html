@@ -14,17 +14,23 @@
             <input type="text" placeholder="Enter the URL here" class="url" id="url_entry"></input>
             <button id="request">Scrape</button>
         </div>
-        <div class="output">
-            <h1>A breakdown for: </h1>
-            <h4>Title: </h4>
-            <p>Number of links on the site: </p>
-            <p>Number of unique links on the site: </p>
-            <p>The page has google analytics: </p>
-            <h4>Is the page secure: </h4>
-            <p>Is the connection secure?: </p>
-            <p>Is the connection encrypted?: </p>
-            <p>Is the socket secure?: </p>
-            <p>Is the socket encrypted?: </p>
+        <div class="output" id="out">
+            <div class="spinner" id="loading">
+                <div class="cube1"></div>
+                <div class="cube2"></div>
+            </div>
+            <div id="text">
+                <h1 id="url_out" >A breakdown for: </h1>
+                <h4 id="title">Title: </h4>
+                <p id="links">Number of links on the site: </p>
+                <p id="unique_links">Number of unique links on the site: </p>
+                <p id="googleAnalytics">The page has google analytics: </p>
+                <h4>Is the page secure: </h4>
+                <p id="connSecure">Is the connection secure?: </p>
+                <p id="connEnc">Is the connection encrypted?: </p>
+                <p id="socSecure">Is the socket secure?: </p>
+                <p id="socEnc">Is the socket encrypted?: </p>
+            </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
         <script src="js/script.js"></script>
