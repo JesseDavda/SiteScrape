@@ -50,21 +50,21 @@ app.post("/url", (req, res) => {
     //requesting the webpage
     request.get(url, (error, response, html) => {
         //loading the html data returned into a cheerio object to scrape it
-        var $ = cheerio.load(html);
+        const $ = cheerio.load(html);
 
-        var title = $('title').text();
+        const title = $('title').text();
 
-        var links = $('a');
+        const links = $('a');
 
         //using the underscore libary to make sure the array of links doesnt have any duplicates
-        var unique_links = _.uniq(links);
+        const unique_links = _.uniq(links);
 
-        var scripts = $('script');
-        var script_length = scripts.length;
-        var analytics_length = gaScripts.length;
+        const scripts = $('script');
+        const script_length = scripts.length;
+        const analytics_length = gaScripts.length;
 
         //calling the function to find whether the page has google analytics
-        var analytics = findScript(scripts, script_length, analytics_length);
+        const analytics = findScript(scripts, script_length, analytics_length);
 
         //checking that the socket and the connection are secure and both are encrypted
         var connectionSecure, connectionEncrypted, socketSecure, socketEncrypted;
